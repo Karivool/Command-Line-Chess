@@ -7,4 +7,8 @@ class Piece
     @position = position
   end
 
+  def valid_moves
+    (0..7).to_a.product((0..7).to_a)
+  end
+
 end
