@@ -1,10 +1,11 @@
 require 'colorize'
 
 class Display
-  attr_reader :board
+  attr_reader :board, :cursor
 
   def initialize(board)
     @board = board
+    @cursor = [0, 0]
   end
 
   def render
@@ -20,11 +21,14 @@ class Display
           piece_sym = " "
         end
 
-        if (x+y) % 2 == 0
-          print piece_sym.colorize(:background => :green)
-        else
-          print piece_sym.colorize(:background => :light_yellow)
+        if cursor == [x, y]
+          bg_color = :blue
+        elsif (x + y) % 2 == 0
+          bg_color = :green
+        elsif (x + y) % 2 == 1
+          bg_color = :light_yellow
         end
+          print piece_sym.colorize(:background => bg_color)
       end
       puts
     end
