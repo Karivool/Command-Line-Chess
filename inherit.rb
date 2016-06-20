@@ -50,9 +50,9 @@ if __FILE__ == $PROGRAM_NAME
   shawna = Employee.new("Shawna","TA",12000)
   david = Employee.new("David","TA",10000)
   darren = Manager.new("Darren","TA Manager",78000)
-  darren.add_subordinate(shawna)
-  darren.add_subordinate(david)
-  ned.add_subordinate(darren)
+  # darren.add_subordinate(shawna)
+  # darren.add_subordinate(david)
+  # ned.add_subordinate(darren)
 
   puts ned.subordinates
   puts ned.bonus(5)
