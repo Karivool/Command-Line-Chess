@@ -14,6 +14,18 @@ def get_paths(start_position, end_position)
     possible == end_position &&
     is_not_blocked?(end_position) &&
     in_bounds?(end_position)
+  end + get_capture_moves(start_position, end_position)
+end
+
+def get_capture_moves(start_position, end_position)
+
+  moves = [[1 + start_position[0], deltas[1] + start_position[1]]]
+  moves << [-1 + start_position[0], deltas[1] + start_position[1]]
+
+  moves.select do |possible|
+    possible == end_position &&
+    !@board[end_position].nil? &&
+    self.color != @board[end_position].color
   end
 end
 
