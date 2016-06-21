@@ -1,5 +1,5 @@
 
-module Stepping
+module Steppable
 
 
 end

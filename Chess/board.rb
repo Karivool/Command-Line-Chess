@@ -13,17 +13,29 @@ class Board
     make_starting_grid
   end
 
+  def [](pos)
+    x, y = pos[0], pos[1]
+    @grid[x][y]
+  end
+
+  def []=(pos,new_value)
+    x,y = pos[0], pos[1]
+    @grid[x][y] = new_value
+  end
+
   def move(start, end_pos)
     if valid_move?(start, end_pos)
-      @grid[end_pos.first][end_pos.last] = @grid[start.first][start.last]
-      @grid[start.first][start.last] = nil
+      piece = self[start]
+      self[end_pos] = self[start]
+      self[start] = nil
+      #piece.update_position(end_pos)
     else
       raise "Invalid Move"
     end
   end
 
   def valid_move?(start, end_pos)
-    @grid[start.first][start.last] != nil && in_bounds?(end_pos)
+    self[start] != nil && in_bounds?(end_pos)
   end
 
   def in_bounds?(end_pos)
