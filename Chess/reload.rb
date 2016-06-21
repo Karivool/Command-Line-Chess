@@ -11,6 +11,9 @@ def reload
   load 'bishop.rb'
   load 'queen.rb'
   load 'rook.rb'
+  load 'movementmodules/sliding.rb'
+  load 'movementmodules/stepping.rb'
+  load 'movementmodules/pawn.rb'
 end
 
 

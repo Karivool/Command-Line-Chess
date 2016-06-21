@@ -28,15 +28,15 @@ class Board
       piece = self[start]
       self[end_pos] = self[start]
       self[start] = nil
-      #piece.update_position(end_pos)
+      piece.update_position(end_pos)
     else
       raise "Invalid Move"
     end
   end
 
   def valid_move?(start, end_pos)
+    return false if start == end_pos
     piece = self[start]
-    # debugger
     piece != nil && in_bounds?(end_pos) && !piece.get_paths(start, end_pos).empty?
   end
 
@@ -54,6 +54,7 @@ class Board
     @grid[5][0] = Bishop.new(:black, self, [5, 0])
     @grid[4][0] = Queen.new(:black, self, [4, 0])
     @grid[4][4] = Queen.new(:black, self, [4, 4])
+    @grid[4][5] = Rook.new(:black, self, [4, 5])
     @grid[3][0] = King.new(:black, self, [3, 0])
     @grid[1].each_with_index do | _, idx |
       @grid[idx][1] = Pawn.new(:black, self, [idx, 1])

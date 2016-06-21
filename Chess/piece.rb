@@ -23,4 +23,8 @@ class Piece
     (0..7).to_a.product((0..7).to_a)
   end
 
+  def update_position(position)
+    @position = position
+  end
+
 end

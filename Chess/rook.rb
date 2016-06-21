@@ -6,12 +6,16 @@ require_relative 'movementmodules/sliding.rb'
 class Rook < Piece
 
   include Slideable
-  deltas = STRDELTAS
+  DELTAS = STRDELTAS
 
   def initialize(color, board, position)
     super
     @symbol = "r"
 
+  end
+
+  def deltas
+    DELTAS
   end
 
 end
