@@ -1,3 +1,4 @@
+require 'byebug'
 
 module Slideable
 
@@ -8,8 +9,9 @@ module Slideable
   def get_paths(start_position)
     possibles = []
     DELTAS.each do |dir|
+      # debugger
       paths = [start_position]
-      until paths.last.out_of_bounds?
+      while in_bounds?(paths.last)
         paths << [dir[0] + paths.last[0], dir[1] + paths.last[1]]
       end
       paths.pop
@@ -18,12 +20,24 @@ module Slideable
     possibles
   end
 
-  def find_path_for_position(position)
-    get_paths(position).select { |possible| possible.include?(position) }
+  def in_bounds?(pos)
+    pos[0].between?(0, 7) && pos[1].between?(0, 7)
   end
 
-  def return_path_for_position
-
+  def find_path_for_position(start_pos, end_pos)
+    get_paths(start_pos).select { |possible| possible.include?(end_pos) }
   end
+
+  def return_path_for_position(start_pos, end_pos)
+    return nil if find_path_for_position(start_pos, end_pos).empty?
+    path = find_path_for_position(start_pos, end_pos).last
+
+    until path.last == end_pos
+      path.pop
+    end
+
+    path
+  end
+
 
 end
