@@ -15,6 +15,10 @@ class Piece
     # print " ".colorize(:background => :green)
   end
 
+  def path_blocked?(start, end_pos)
+    false
+  end
+
   def valid_moves
     (0..7).to_a.product((0..7).to_a)
   end

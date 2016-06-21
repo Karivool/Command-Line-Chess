@@ -52,7 +52,7 @@ module Cursorable
 
   def read_char
     STDIN.echo = false
-    STDIN.raw!
+     STDIN.raw!
 
     input = STDIN.getc.chr
     if input == "\e" then
@@ -61,7 +61,7 @@ module Cursorable
     end
   ensure
     STDIN.echo = true
-    STDIN.cooked!
+     STDIN.cooked!
 
     return input
   end

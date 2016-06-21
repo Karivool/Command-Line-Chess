@@ -20,9 +20,15 @@ class Chess
   end
 
   def play_turn
-    start_position = get_position
-    end_position = get_position
-    @board.move(start_position, end_position)
+    begin
+      start_position = get_position
+      end_position = get_position
+      @board.move(start_position, end_position)
+    rescue RuntimeError => e
+      puts e.message
+      sleep(1)
+      retry
+    end
   end
 
   def get_position

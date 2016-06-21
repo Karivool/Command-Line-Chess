@@ -32,6 +32,7 @@ class Display
         end
           bg_color = get_bg_color(x, y)
 
+
           print piece_sym.colorize(:background => bg_color)
       end
       puts
