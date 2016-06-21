@@ -1,3 +1,9 @@
+require_relative 'bishop.rb'
+require_relative 'king.rb'
+require_relative 'knight.rb'
+require_relative 'pawn.rb'
+require_relative 'queen.rb'
+require_relative 'rook.rb'
 
 class Board
   attr_accessor :grid
@@ -9,15 +15,19 @@ class Board
 
   def move(start, end_pos)
     if valid_move?(start, end_pos)
-      @grid[end_pos] = @grid[start]
-      @grid[start] = nil
+      @grid[end_pos.first][end_pos.last] = @grid[start.first][start.last]
+      @grid[start.first][start.last] = nil
     else
       raise "Invalid Move"
     end
   end
 
   def valid_move?(start, end_pos)
-    @grid[start] != nil && @grid[start].valid_moves.include?(end_pos)
+    @grid[start.first][start.last] != nil && in_bounds?(end_pos)
+  end
+
+  def in_bounds?(end_pos)
+    (0..7).to_a.product((0..7).to_a).include?(end_pos)
   end
 
   protected

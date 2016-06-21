@@ -1,6 +1,8 @@
 require 'colorize'
+require_relative 'cursor.rb'
 
 class Display
+  include Cursorable
   attr_reader :board, :cursor
 
   def initialize(board)
@@ -8,11 +10,19 @@ class Display
     @cursor = [0, 0]
   end
 
-  def render
-    puts to_s
+  def get_bg_color(x, y)
+    if cursor == [x, y]
+      bg_color = :blue
+    elsif (x + y) % 2 == 0
+      bg_color = :light_white
+    elsif (x + y) % 2 == 1
+      bg_color = :light_black
+    end
+    bg_color
   end
 
-  def to_s
+  def render
+    system("clear")
     board.grid.each_with_index do | row, y |
       row.each_with_index do | space, x |
         unless board.grid[x][y].nil?
@@ -20,14 +30,8 @@ class Display
         else
           piece_sym = " "
         end
+          bg_color = get_bg_color(x, y)
 
-        if cursor == [x, y]
-          bg_color = :blue
-        elsif (x + y) % 2 == 0
-          bg_color = :green
-        elsif (x + y) % 2 == 1
-          bg_color = :light_yellow
-        end
           print piece_sym.colorize(:background => bg_color)
       end
       puts

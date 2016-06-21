@@ -25,10 +25,10 @@ module Cursorable
   }
 
   MOVES = {
-    left: [0, -1],
-    right: [0, 1],
-    up: [-1, 0],
-    down: [1, 0]
+    left: [-1, 0],
+    right: [1, 0],
+    up: [0, -1],
+    down: [0, 1]
   }
 
   def get_input
@@ -41,7 +41,7 @@ module Cursorable
     when :ctrl_c
       exit 0
     when :return, :space
-      @cursor_pos
+      @cursor
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil
@@ -67,7 +67,7 @@ module Cursorable
   end
 
   def update_pos(diff)
-    new_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
-    @cursor_pos = new_pos if @board.in_bounds?(new_pos)
+    new_pos = [@cursor[0] + diff[0], @cursor[1] + diff[1]]
+    @cursor = new_pos if @board.in_bounds?(new_pos)
   end
 end
