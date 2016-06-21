@@ -29,6 +29,13 @@ class Board
       self[end_pos] = self[start]
       self[start] = nil
       piece.update_position(end_pos)
+      if in_check?(:black)
+        puts "Black is in check!"
+        sleep(0.3)
+      elsif in_check?(:red)
+        puts "White is in check!"
+        sleep(0.3)
+      end
     else
       raise "Invalid Move"
     end
@@ -37,11 +44,27 @@ class Board
   def valid_move?(start, end_pos)
     return false if start == end_pos
     piece = self[start]
+    player_color = piece.color
+
+    raise "That puts you in check" if in_check?(player_color)
     piece != nil && in_bounds?(end_pos) && !piece.get_paths(start, end_pos).empty?
   end
 
   def in_bounds?(end_pos)
     (0..7).to_a.product((0..7).to_a).include?(end_pos)
+  end
+
+  def in_check?(color)
+    @grid.each do |row|
+      row.each do |space|
+        piece = space
+        next if piece.nil?
+
+        return true if valid_move?(piece.position, @black_king.position) && color == :black
+        return true if valid_move?(piece.position, @white_king.position) && color == :red
+      end
+    end
+    false
   end
 
   protected
@@ -53,9 +76,8 @@ class Board
     @grid[2][0] = Bishop.new(:black, self, [2, 0])
     @grid[5][0] = Bishop.new(:black, self, [5, 0])
     @grid[4][0] = Queen.new(:black, self, [4, 0])
-    @grid[4][4] = Queen.new(:black, self, [4, 4])
-    @grid[4][5] = Rook.new(:black, self, [4, 5])
-    @grid[3][0] = King.new(:black, self, [3, 0])
+    @black_king = King.new(:black, self, [3, 0])
+    @grid[3][0] = @black_king
     @grid[1].each_with_index do | _, idx |
       @grid[idx][1] = Pawn.new(:black, self, [idx, 1])
     end
@@ -66,7 +88,8 @@ class Board
     @grid[2][7] = Bishop.new(:red, self, [2, 7])
     @grid[5][7] = Bishop.new(:red, self, [5, 7])
     @grid[3][7] = Queen.new(:red, self, [3, 7])
-    @grid[4][7] = King.new(:red, self, [4, 7])
+    @white_king = King.new(:red, self, [4, 7])
+    @grid[4][7] = @white_king
     @grid[1].each_with_index do | _, idx |
       @grid[idx][6] = Pawn.new(:red, self, [idx, 6])
     end
